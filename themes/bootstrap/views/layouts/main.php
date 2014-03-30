@@ -108,31 +108,37 @@
 									      'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 									),)); 
 					?>
-			</div><div class="row-fluid" style="background-color:#CC0000;height:8px">.</div>
-		</div>
-    </div>	
-    		<?php if (Yii::app()->user->isGuest){echo $content;}?>
-    		<div class="row-fluid">
-				<div class="span1">&nbsp</div>
-				<div style="text-align: right;"></div>
+			    </div>
+			    <div class="row-fluid" style="background-color:#CC0000;height:8px">.</div>
+		    </div>
+        </div>	
+    	<?php if (Yii::app()->user->isGuest){echo $content;}?>
+    	<div class="row-fluid">
 
-				<div>
-					<?php if(isset($this->breadcrumbs)):?>
-						<?php $this->widget('zii.widgets.CBreadcrumbs', array('links'=>$this->breadcrumbs,)); ?>
-					<?php endif?>
-				</div>
-				<?php if (!Yii::app()->user->isGuest){echo $content;}?>
-				<br>&nbsp;</br>
-				<br>&nbsp;</br>
-				<br>&nbsp;</br>
+			<!--div>
+				<?php 
+				  /*if(isset($this->breadcrumbs)):
+					$this->widget('zii.widgets.CBreadcrumbs', array('links'=>$this->breadcrumbs,)); 
+				  endif*/
+				?>
 			</div>
-</div>
-<div class="navbar navbar-inner  navbar-fixed-bottom">
-	<p class="text-muted credit"><center>&copy;&nbsp;<?php echo date('Y'); ?> D.A.U. 
-	- Oficina de Inform&aacute;tica. Todos los derechos Reservados.&nbsp;&nbsp;&#124;&nbsp;&nbsp;
-		<a href="https://www.facebook.com/dau.tuc" target="_blank"><i class="icon-thumbs-up"></i></a></center></p>
-</div>
+			<div class="container"-->
+			  <?php if (!Yii::app()->user->isGuest){ echo $content;} ?>
+			<!--/div-->
+			
+			<br>&nbsp;
+			<br>&nbsp;
+			<br>&nbsp;
 
+		</div>
+    </div>
+
+    <div class="navbar navbar-inner  navbar-fixed-bottom">
+	  <p class="text-muted credit"><center>&copy;&nbsp;<?php echo date('Y'); ?> D.A.U. 
+	  - Oficina de Inform&aacute;tica. Todos los derechos Reservados.&nbsp;&nbsp;&#124;&nbsp;&nbsp;
+	  <a href="https://www.facebook.com/dau.tuc" target="_blank"><i class="icon-thumbs-up"></i></a></center></p>
+    </div>
+</div>
 </body>
 <script src="<?php echo Yii::app()->theme->baseUrl; ?>/js/bootstrap.js"></script>
 </html>

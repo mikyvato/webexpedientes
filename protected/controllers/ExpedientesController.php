@@ -2,7 +2,7 @@
 
 class ExpedientesController extends Controller
 {
-	public $layout='//layouts/column2';
+	public $layout='//layouts/column1';
 
 	public function filters()
 	{
