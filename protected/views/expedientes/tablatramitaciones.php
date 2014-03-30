@@ -2,15 +2,13 @@
 
 <div class="row-fluid">
 
-	<div class="span2"></div>
-	<div class="span8" id="fields">
+	<!--div class="span2"></div-->
+	<div class="span12" id="fields">
 
 		<table class="table table-striped table-bordered table-hover table-condensed">
 		 	<caption>Tramitaciones del Expediente </caption>
 		 	<thead>
 			 	<tr class="info">
-				 	<th>N° Expediente</th>
-				 	<th>Fecha tramite</th>
 				 	<th>Oficina</th>
 				 	<th>Estado</th>
 				 	<th>Estado Tramite</th>
@@ -22,65 +20,41 @@
 		 	<?php 
 		 			$f=1;
 		 			foreach ($model as $tramitaciones):
-		 			echo "<tr class='success'>";
-		 				$data = Expedientes::model()->findbypk($tramitaciones['expedientes_id_exp']);
-			 			echo "<td>".$data->num_expediente."</td>";
-			 			$fecha = Yii::app()->dateFormatter->format("dd/MM/y", $tramitaciones['fecha_tramite']);
-			 			echo "<td>".$fecha."</td>";
-			 			$ofi = Oficinas::model()->findbypk($tramitaciones['oficinas_id_oficina']);
-			 			echo "<td>".$ofi->descripcion."</td>";
+		 				if ($f % 2) 
+		 				  echo "<tr class='success'>";
+		 				else
+		 				  echo "<tr class='error'>";
+		 				//$data = Expedientes::model()->findbypk($tramitaciones['expedientes_id_exp']);
+			 			//echo "<td>".$data->num_expediente."</td>";
+			 			//$fecha = Yii::app()->dateFormatter->format("dd/MM/y", $tramitaciones['fecha_tramite']);
+			 			//echo "<td>".$fecha."</td>";
+			 			//$ofi = Oficinas::model()->findbypk($tramitaciones['oficinas_id_oficina']);
+			 			echo "<td>".$tramitaciones->oficinasIdOficina->descripcion."</td>";//$ofi->descripcion
 			 			echo "<td>".$tramitaciones->estado."</td>";
 			 			echo "<td>".$tramitaciones->estado_tramite."</td>";
 			 			// echo "<td>".CHtml::submitButton('Ver', array('submit' => array("observaciones/viewo","id"=>$tramitaciones->id_tramite), 'class'=>"btn btn-danger btn-mini"))."</td>";
-						echo "<td>".CHtml::link('Ver',"#myModal".$tramitaciones['id_tramite'], array('data-toggle' => 'modal'))."</td>";
-		 			
+			 			if ($tramitaciones->countObs > 0) {
+						  echo "<td>".CHtml::link(
+						  	'<i class="icon-search icon-white"></i> Ver',"#myModal".$tramitaciones['id_tramite'], 
+						  	array(
+						  		'data-toggle' => 'modal',
+						  		'class' => 'btn btn-mini btn-primary',
+						  		))."</td>";
+			 			
+		 			    
 
 					?>
 					<div class="modal hide fade" <?php echo 'id="myModal'.$tramitaciones['id_tramite'].'"'; ?> >
 
 					  <div class="modal-header">
 					    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-					    <h3>Observaciones</h3>
+					    <h3>Observaciones <small><?php echo $tramitaciones->oficinasIdOficina->descripcion; ?></small></h3>
 					  </div>
 
 					  <div class="modal-body">
-					    <table class="table table-striped table-bordered table-hover table-condensed">
-						 	<caption>Observaciones </caption>
-						 	<thead>
-							 	<tr class="info">
-								 	<th>ID</th>
-								 <!--	<th>Detalle</th>
-								 	<th>Id Exp</th>
-								 	<th>Id Tramite</th>
-								 	<th>ID Oficina</th>
-								 	<th>Fecha</th> -->
-						 		</tr>
-						 	</thead>
-						<tbody>
-					    <?php 
-					    	$idtramite = $tramitaciones['id_tramite'];
-					    	$observaciones = Observaciones::model()->findAll(array(
-		 														'condition'=>'tramitaciones_id_tramite=:tramite', 
-		 														'params'=>array('tramite'=> $idtramite,)
-		 																	)
-		 															);
-					    	$f2=1;
-				 			foreach ($observaciones as $obs):
-					 			echo "<tr class='info'>";
-						 			echo $obs['id_observacion'];
-						 			// echo "<td>".$obs['detalle_observacion']."</td>";
-						 			// echo "<td>".$obs['expedientes_id_exp']."</td>";
-						 			// echo "<td>".$obs['tramitaciones_id_tramite']."</td>";
-						 			// echo "<td>".$obs['oficinas_id_oficina']."</td>";
-						 			// echo "<td>".$obs['fecha']."</td>";
-					 			echo "</tr>"; 
-
-				 				$f2++;
-		 					endforeach;
-		 					unset($observaciones);
-		 					?>
-					  	</tbody>
-					  </table>
+							<?php 
+							  $this->renderPartial('modalObservaciones', array('idtramite'=>$tramitaciones['id_tramite']));
+							?>
 					  </div>
 
 					  <div class="modal-footer">
@@ -91,6 +65,7 @@
 
 
 					<?php
+				} else { echo "<td></td>";}
 		 			$f++;
 		 			echo "</tr>";
 		 			endforeach;

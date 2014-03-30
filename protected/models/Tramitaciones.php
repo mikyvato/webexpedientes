@@ -26,6 +26,7 @@ class Tramitaciones extends CActiveRecord
 			'expedientesIdExp' => array(self::BELONGS_TO, 'Expedientes', 'expedientes_id_exp'),
 			'oficinasIdOficina' => array(self::BELONGS_TO, 'Oficinas', 'oficinas_id_oficina'),
 			'usuariosIdUsuario' => array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
+			'countObs' => array(self::STAT, 'Observaciones', 'tramitaciones_id_tramite', 'select'=>'COUNT(t.id_observacion)'),
 		);
 	}
 
