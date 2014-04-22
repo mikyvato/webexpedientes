@@ -22,7 +22,7 @@
 	
 	foreach ($observaciones as $obs):
 		echo "<blockquote>";
- 		echo "<dt><span class='label label-info'>Fecha: </span> &nbsp;".$obs['fecha']."</dt>";
+ 		echo "<span class='label label-info'>Fecha: </span> &nbsp;".$obs['fecha']."";
  		echo "<p>".$obs['detalle_observacion']."</p>";
  			// echo "<td>".$obs['expedientes_id_exp']."</td>";
  			// echo "<td>".$obs['tramitaciones_id_tramite']."</td>";
