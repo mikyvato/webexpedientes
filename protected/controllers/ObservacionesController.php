@@ -46,21 +46,32 @@ class ObservacionesController extends Controller
 
 	public function actionCreate($id)
 	{
-		$user = UsuariosController::loadModel(yii::app()->user->id);
+
 		$model=new Observaciones;
-		$model->tramitaciones_id_tramite=$id;
-		$model->fecha=date('Y-m-d');
-		$model->oficinas_id_oficina=$user->oficinas_id_oficina;
-		$model->expedientes_id_exp=$model->tramitacionesIdTramite->expedientes_id_exp;
 
-		if(isset($_POST['Observaciones']))
-		{
-			$model->attributes=$_POST['Observaciones'];
-			if($model->save())
-				$this->redirect(array('tramitaciones/admin'));
-		}
+		if (Yii::app()->request->isAjaxRequest){
 
-		$this->render('create',array(
+			$user = UsuariosController::loadModel(yii::app()->user->id);
+		    		
+		    $model->tramitaciones_id_tramite=$id;
+		    $model->fecha=date('Y-m-d');
+		    $model->oficinas_id_oficina=$user->oficinas_id_oficina;
+		    $model->expedientes_id_exp=$model->tramitacionesIdTramite->expedientes_id_exp;
+
+			$this->renderPartial('_form',array('model'=>$model,),false,true);
+
+			//if (!empty($_GET['asDialog'])) 
+               echo CHtml::script('$("#dlg-Obser").dialog("open")');
+            Yii::app()->end();
+        }
+        else
+            if(isset($_POST['Observaciones'])){
+			   $model->attributes=$_POST['Observaciones'];
+			   if($model->save())
+				  $this->redirect(array('tramitaciones/admin'));
+		    }
+
+		$this->render('_form',array(
 			'model'=>$model,
 		));
 	}

@@ -29,15 +29,32 @@ $('.search-form form').submit(function(){
 	        ),
 	)) ?>
 <div id="id_view"></div>
-<?php $this->endWidget() ?>
+<?php $this->endWidget();?>
+
+<?php $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+	        'id' => 'dlg-Obser',
+	        'options' => array(
+	            'title' => 'Detalle del Expediente',
+	           // 'show'=>'slide',
+	            'closeOnEscape' => true,
+	            'autoOpen' => false,
+	            'model' => false,
+	            'width' => 300,
+	            'height' => 300,
+	        ),
+	)) ?>
+<div id="id_obs" class="span6"></div>
+<?php $this->endWidget();?>
+
 <?php //------------------------------------------------------- ?>
 
-<h1 style="text-align:center;"><u>Administrar Tramitaciones de 
-								<?php 
-									$user = UsuariosController::loadModel(yii::app()->user->id);
-									echo CHtml::encode($user->oficinasIdOficina->descripcion); 
-								?>
-							</u>
+<h1 style="text-align:center;">
+	Administrar Tramitaciones <br>
+	<?php 
+		$user = UsuariosController::loadModel(yii::app()->user->id);
+		echo '<u>'.CHtml::encode($user->oficinasIdOficina->descripcion).'</u>'; 
+	?>
+	
 </h1>
 
 <div class="row-fluid">
@@ -198,7 +215,7 @@ $('.search-form form').submit(function(){
 				               		'options'=>array(
 					           				'title'=>'Pase', 
 					           				'role'=>"button",
-					           				'class'=>"btn btn-success",
+					           				'class'=>"btn btn-mini btn-success",
 					           				'data-toggle'=>"modal",
 				                			),
 		               					),
@@ -206,8 +223,15 @@ $('.search-form form').submit(function(){
 				               		'label'=>'<i class="icon-info-sign"></i>&nbsp;',
 				               		'url'=>'Yii::app()->createUrl("observaciones/create", array("id"=>$data->id_tramite))',
 				                	'options'=>array(
-				                				'title'=>'Agregar Observacion',
-		               				 			'class'=>'btn btn-mini'
+				                				'rel' => 'tooltip', 
+		                               		    'data-toggle' => 'tooltip',
+		                               		    'title'=> 'Observaciones',
+		                               		    'class'=>"btn btn-mini",
+					                      	    'ajax' => array(
+							                        'type' => 'POST',
+							                        'url' => "js:$(this).attr('href')",
+							                        'update'=>'#id_obs',
+					                        		),
 				                				),
 		               					),
 		       					'exp' => array(
@@ -217,17 +241,20 @@ $('.search-form form').submit(function(){
 							                'rel' => 'tooltip', 
 		                               		'data-toggle' => 'tooltip',
 		                               		'title'=> 'Ver Expediente',
+		                               		'class'=>"btn btn-mini",
 					                      	'ajax' => array(
 							                        'type' => 'POST',
 							                        'url' => "js:$(this).attr('href')",
 							                        'update'=>'#id_view',
 					                        		),
 					                    		),
-					                	),    // exp boton
+					                	),    // exp boton*/
            						),
     			),
 			),
-		)); ?>		
+		)); 
+?>
+
 	</div>
 	
 	<div class="tab-pane" id="tab3">
